@@ -17,7 +17,7 @@ import {
 import { makeZeroWidth, makeGlueAtEndZeroWidth } from "src/utils/collapseGlue";
 import { breakLinesGreedy } from "src/utils/greedy";
 import { TextBox, TextItem } from "src/utils/items";
-import { getLineWidth } from "src/utils/lineWidth";
+import { getLineWidth, LineWidth } from "src/utils/lineWidth";
 import { getStretch, getText, isSoftHyphen } from "src/utils/utils";
 import { Memoize } from "typescript-memoize";
 
@@ -291,7 +291,15 @@ export class Line<InputItemType extends AnyItem = AnyItem> {
   }
 
   get idealWidth() {
-    return getLineWidth(this.options.lineWidth, this.lineIndex);
+    let lineWidth = this.options.lineWidth as LineWidth;
+    if (
+      this.options.defaultLineWidth !== undefined &&
+      (lineWidth as Record<string, number>)[this.lineIndex] === undefined &&
+      Number.isNaN((lineWidth as Record<string, number>).defaultLineWidth)
+    ) {
+      lineWidth = this.options.defaultLineWidth
+    }
+    return getLineWidth(lineWidth, this.lineIndex);
   }
 
   @Memoize()
@@ -334,7 +342,6 @@ export class Line<InputItemType extends AnyItem = AnyItem> {
     }
 
     if (isNaN(adjustmentRatio)) {
-      console.log(this);
       throw new Error("Adjustment ratio is NaN");
     }
 

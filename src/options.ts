@@ -13,6 +13,12 @@ export class TexLinebreakOptions {
    */
   lineWidth!: LineWidth;
 
+  /**
+   * Passing a base defaultLineWidth to tex-linebreak2 can help avoid
+   * "adjustmentRatio is NaN" errors in some cases:
+   */
+  defaultLineWidth?: number;
+
   justify: boolean = true;
   align?: "left" | "right" | "center";
 
