@@ -37,7 +37,6 @@ export function addItemsFromElement(
   const {
     display,
     position,
-    width,
     paddingLeft,
     paddingRight,
     marginLeft,
@@ -113,16 +112,7 @@ export function addItemsFromElement(
       });
     }
   } else {
-    let _width = parseFloat(width);
-    if (isNaN(_width)) {
-      console.error(
-        "Received an element with an unparsable width. This should have been handled.",
-        element
-      );
-      _width = 0;
-    }
-
     // Treat this item as an opaque box.
-    items.push(box(_width));
+    items.push(box(element.getBoundingClientRect().width));
   }
 }
