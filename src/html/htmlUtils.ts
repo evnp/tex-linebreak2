@@ -9,7 +9,10 @@ import { TexLinebreakOptions } from "../options";
 export function getFloatingElements(
   options: TexLinebreakOptions
 ): HTMLElement[] {
-  if (options.ignoreFloatingElements) return [];
+  if (
+    options.ignoreFloatingElements &&
+    typeof options.ignoreFloatingElements !== "function"
+  ) return [];
   let floating: HTMLElement[] = [];
   Array.from(
     document.querySelectorAll<HTMLElement>("body *:not(span,script,b,i,br)")

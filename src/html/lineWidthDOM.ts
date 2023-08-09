@@ -1,9 +1,18 @@
 import { getLineWidth, LineWidth, LineWidthObject } from "src/utils/lineWidth";
+import { TexLinebreakOptions } from "../options";
 
 export function getElementLineWidth(
   paragraphElement: HTMLElement,
-  floatingElements?: HTMLElement[]
+  floatingElements?: HTMLElement[],
+  options?: TexLinebreakOptions,
 ): LineWidth {
+  // Allow filtering floating elements by predicate (optional ignoreFloatingElements):
+  if (typeof options?.ignoreFloatingElements === "function") {
+    floatingElements = floatingElements?.filter((floatingElement) =>
+      (options.ignoreFloatingElements as Function)(paragraphElement, floatingElement)
+    )
+  }
+
   let { width, boxSizing, paddingLeft, paddingRight, textIndent, lineHeight } =
     getComputedStyle(paragraphElement);
   let defaultLineWidth: number | number[] = parseFloat(width!);

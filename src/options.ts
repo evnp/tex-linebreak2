@@ -355,7 +355,12 @@ export class TexLinebreakOptions {
   clearItemCache?: boolean;
   isPlaintext?: boolean;
 
-  ignoreFloatingElements?: boolean;
+  /**
+   * If ignoreFloatingElements set to true, ignore floating elements entirely.
+   * If ignoreFloatingElements set as function, use as predicate to filter floating
+   * elements before referencing them during line width calculations.
+   */
+  ignoreFloatingElements?: boolean | ((paragraphElement: HTMLElement, floatingElement: HTMLElement) => boolean);
 
   // maxLines?: number;
   // fillAllLines?: boolean;

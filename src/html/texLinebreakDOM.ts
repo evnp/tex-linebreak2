@@ -56,7 +56,7 @@ export async function texLinebreakDOM(
 
     try {
       const lineWidth =
-        options.lineWidth || getElementLineWidth(element, floatingElements);
+        options.lineWidth || getElementLineWidth(element, floatingElements, options);
 
       let items: DOMItem[];
 
