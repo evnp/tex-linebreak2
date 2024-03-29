@@ -297,9 +297,14 @@ export class Line<InputItemType extends AnyItem = AnyItem> {
       (lineWidth as Record<string, number>)[this.lineIndex] === undefined &&
       Number.isNaN((lineWidth as Record<string, number>).defaultLineWidth)
     ) {
-      lineWidth = this.options.defaultLineWidth
+      lineWidth = this.options.defaultLineWidth;
     }
-    return getLineWidth(lineWidth, this.lineIndex);
+    const result = getLineWidth(lineWidth, this.lineIndex);
+    if (!Number.isInteger(result)) {
+      return this.options.defaultLineWidth ?? 0;
+    } else {
+      return result;
+    }
   }
 
   @Memoize()
